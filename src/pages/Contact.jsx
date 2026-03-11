@@ -20,7 +20,7 @@ export default function Contact() {
 
   useEffect(() => {
     if (!window.mapboxgl || !mapRef.current || mapInstance.current) return
-    const token = import.meta.env.MAPBOX_TOKEN
+    const token = import.meta.env.VITE_MAPBOX_TOKEN
     if (!token) {
       console.error('Mapbox token is not set. Please check your .env file.')
       return

@@ -20,7 +20,11 @@ export default function Contact() {
 
   useEffect(() => {
     if (!window.mapboxgl || !mapRef.current || mapInstance.current) return
-    const token = 'pk.eyJ1IjoibWRhZmZhbmFzZ2hhciIsImEiOiJjbG80ZDl3Y3kwMTExMmlxZHd2NmFyN2R5In0.CFJ5SZdaJzFujJnLaK1gUQ'
+    const token = import.meta.env.MAPBOX_TOKEN
+    if (!token) {
+      console.error('Mapbox token is not set. Please check your .env file.')
+      return
+    }
     window.mapboxgl.accessToken = token
     const map = new window.mapboxgl.Map({
       container: mapRef.current,
@@ -43,7 +47,7 @@ export default function Contact() {
       <main ref={heroRef}>
         <div className="firstSection">
           <div className="leftSection">
-            <img src="=/assests/avatar.png" style={{ height: '320px' }} />
+            <img src="/assests/avatar.png" style={{ height: '320px' }} />
           </div>
           <div className="rightSection" id="rs">
             <form>

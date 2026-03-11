@@ -1,3 +1,6 @@
+import { useEffect } from 'react'
+import { gsap, ScrollTrigger } from '../lib/gsap'
+
 export default function Services() {
   const services = [
     {
@@ -16,6 +19,21 @@ export default function Services() {
       text: 'Fast, secure, and scalable hosting. Whether a personal blog, e-commerce site, or full-scale web application.',
     },
   ]
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from('.service-heading', { y: 40, opacity: 0, duration: 0.8, stagger: 0.12, ease: 'power2.out', delay: 0.2 })
+      gsap.from('#service-card', {
+        y: 60,
+        opacity: 0,
+        duration: 0.7,
+        stagger: 0.15,
+        ease: 'power2.out',
+        scrollTrigger: { trigger: '#ServiceBody .service-container', start: 'top 85%' },
+      })
+    })
+    return () => ctx.revert()
+  }, [])
 
   return (
     <main id="ServiceBody">

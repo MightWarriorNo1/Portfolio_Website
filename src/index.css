@@ -46,6 +46,12 @@ nav {
   top: 0;
   flex-grow: 1;
   z-index: 1000;
+  transition: box-shadow 0.4s ease, background-color 0.4s ease;
+}
+
+nav.navbar-scrolled {
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+  background-color: rgba(18, 18, 62, 0.96);
 }
 
 nav ul {
@@ -121,6 +127,14 @@ main hr {
   border-radius: 6px;
   font-size: 16px;
   cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.leftSection .btn1:hover,
+.leftSection .btn2:hover,
+.leftSection .btn3:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(35, 213, 171, 0.35);
 }
 
 .btn1 a, .btn2 a, .btn3 a {
@@ -224,12 +238,14 @@ main hr {
   margin: 50px;
   padding: 10px;
   text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .card:hover {
   border: 1px solid #ccc;
   border-radius: 8px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 24px rgba(156, 151, 241, 0.25);
+  transform: translateY(-6px);
 }
 
 #experience {
@@ -404,6 +420,7 @@ main hr {
   width: 200rem;
   border: none;
   margin: 20px;
+  transition: transform 0.4s ease, background-color 0.5s ease, box-shadow 0.4s ease;
 }
 
 #service-card img {
@@ -428,9 +445,10 @@ main hr {
 
 #service-card:hover {
   background-color: rgb(27, 146, 140);
-  transition: all 0.6s ease-in-out;
   cursor: pointer;
   border: none;
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
 }
 
 .visitor-panel {
@@ -467,7 +485,7 @@ main hr {
   cursor: pointer;
   opacity: 0;
   transform: translateY(100px);
-  transition: opacity 0.4s, transform 0.4s;
+  transition: opacity 0.4s ease, transform 0.4s ease, box-shadow 0.3s ease;
 }
 
 #scrollToTop.show {
@@ -475,8 +493,13 @@ main hr {
   transform: translateY(0);
 }
 
+#scrollToTop:hover {
+  transform: translateY(0) scale(1.08);
+  box-shadow: 0 6px 16px rgba(0, 123, 255, 0.5);
+}
+
 #scrollToTop:active {
-  transform: scale(0.9);
+  transform: scale(0.92);
 }
 
 .footer {
@@ -632,6 +655,7 @@ main hr {
 
 .content {
   height: 600px;
+  transition: opacity 0.3s ease;
 }
 
 .source-btn {
@@ -944,6 +968,28 @@ main hr {
   position: relative;
   z-index: 2;
   max-width: 800px;
+}
+
+/* GSAP controls these; disable CSS animation */
+.parallax-hero-content,
+.parallax-contribution-content,
+.parallax-appreciation-content,
+.parallax-achievement-content {
+  will-change: transform;
+}
+.parallax-hero-content h1,
+.parallax-hero-content p,
+.parallax-contribution-content h2,
+.parallax-contribution-content p,
+.parallax-appreciation-content h2,
+.parallax-appreciation-content p,
+.parallax-achievement-content h2,
+.parallax-achievement-content p {
+  animation: none;
+}
+
+.parallax-achievement-shape {
+  overflow: hidden;
 }
 
 .parallax h1,

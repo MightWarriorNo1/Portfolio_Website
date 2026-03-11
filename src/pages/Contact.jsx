@@ -1,8 +1,22 @@
 import { useEffect, useRef } from 'react'
+import { gsap, ScrollTrigger } from '../lib/gsap'
 
 export default function Contact() {
   const mapRef = useRef(null)
   const mapInstance = useRef(null)
+  const heroRef = useRef(null)
+  const mapSectionRef = useRef(null)
+
+  useEffect(() => {
+    const left = heroRef.current?.querySelector('.leftSection')
+    const right = heroRef.current?.querySelector('.rightSection')
+    const ctx = gsap.context(() => {
+      if (left) gsap.from(left, { x: -50, opacity: 0, duration: 0.8, ease: 'power2.out', delay: 0.2 })
+      if (right) gsap.from(right, { x: 50, opacity: 0, duration: 0.8, ease: 'power2.out', delay: 0.35 })
+      if (mapSectionRef.current) gsap.from(mapSectionRef.current, { y: 50, opacity: 0, duration: 0.8, ease: 'power2.out', scrollTrigger: { trigger: mapSectionRef.current, start: 'top 88%' } })
+    })
+    return () => ctx.revert()
+  }, [])
 
   useEffect(() => {
     if (!window.mapboxgl || !mapRef.current || mapInstance.current) return
@@ -26,10 +40,10 @@ export default function Contact() {
 
   return (
     <>
-      <main>
+      <main ref={heroRef}>
         <div className="firstSection">
           <div className="leftSection">
-            <img src="/assests/avatar.png" alt="Affan" style={{ height: '320px' }} />
+            <img src="/public/assests/avatar.png" alt="Affan" style={{ height: '320px' }} />
           </div>
           <div className="rightSection" id="rs">
             <form>
@@ -51,7 +65,7 @@ export default function Contact() {
         </div>
       </main>
 
-      <section>
+      <section ref={mapSectionRef}>
         <h1 style={{ textAlign: 'center' }}>&nbsp;<i className="fa-solid fa-house-flag"></i> My Home Town Map</h1>
         <div style={{ height: '30px' }}></div>
         <div id="map" ref={mapRef}></div>

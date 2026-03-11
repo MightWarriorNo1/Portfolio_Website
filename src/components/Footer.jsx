@@ -1,10 +1,24 @@
+import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
+import { gsap, ScrollTrigger } from '../lib/gsap'
 
 export default function Footer() {
+  const footerRef = useRef(null)
+  const containerRef = useRef(null)
+  const bottomRef = useRef(null)
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from(containerRef.current?.children || [], { y: 35, opacity: 0, duration: 0.6, stagger: 0.1, ease: 'power2.out', scrollTrigger: { trigger: footerRef.current, start: 'top 95%' } })
+      gsap.from(bottomRef.current, { y: 20, opacity: 0, duration: 0.5, delay: 0.3, scrollTrigger: { trigger: footerRef.current, start: 'top 90%' } })
+    })
+    return () => ctx.revert()
+  }, [])
+
   return (
-    <footer>
+    <footer ref={footerRef}>
       <div className="footer">
-        <div className="footer-container">
+        <div className="footer-container" ref={containerRef}>
           <div className="footer-section footer-brand">
             <h3>Kobayashi's Developer Portfolio</h3>
             <p>Turning ideas into reality, one line of code at a time.</p>
@@ -32,7 +46,7 @@ export default function Footer() {
             <p><i className="fa fa-map-marker"></i> Yokohama, Japan</p>
           </div>
         </div>
-        <div className="footer-bottom">
+        <div className="footer-bottom" ref={bottomRef}>
           <p>Copyright &copy; 2026 Kobayashi's Portfolio | All rights reserved</p>
         </div>
       </div>

@@ -1,30 +1,31 @@
 import { useEffect, useRef } from 'react'
 import Typed from 'typed.js'
 import { gsap, ScrollTrigger } from '../lib/gsap'
+import { useUser } from '../context/UserContext'
 
 const SKILLS = {
   'Programming Language': [
-    { img: '/public/assests/c.png', title: 'C Language' },
-    { img: '/public/assests/c++.png', title: 'C++'},
-    { img: '/public/assests/python.png', title: 'PYTHON' },
-    { img: '/public/assests/java.png', title: 'JAVA' },
+    { img: '/assests/c.png', title: 'C Language' },
+    { img: '/assests/c++.png', title: 'C++'},
+    { img: '/assests/python.png', title: 'PYTHON' },
+    { img: '/assests/java.png', title: 'JAVA' },
   ],
   'Frontend Development': [
-    { img: '/public/assests/html.png', title: 'HTML' },
-    { img: '/public/assests/css.png', title: 'CSS' },
-    { img: '/public/assests/javascript.png', title: 'JAVASCRIPT' },
-    { img: '/public/assests/react.png', title: 'React JS', href: '#' },
+    { img: '/assests/html.png', title: 'HTML' },
+    { img: '/assests/css.png', title: 'CSS' },
+    { img: '/assests/javascript.png', title: 'JAVASCRIPT' },
+    { img: '/assests/react.png', title: 'React JS', href: '#' },
   ],
   'Backend Development': [
-    { img: '/public/assests/nodejs.png', title: 'NODE JS', href: '#' },
-    { img: '/public/assests/express2.png', title: 'EXPRESS JS', href: '' },
-    { img: '/public/assests/php.png', title: 'PHP', href: '' },
-    { img: '/public/assests/django.png', title: 'DJANGO', href: '#' },
+    { img: '/assests/nodejs.png', title: 'NODE JS', href: '#' },
+    { img: '/assests/express2.png', title: 'EXPRESS JS', href: '' },
+    { img: '/assests/php.png', title: 'PHP', href: '' },
+    { img: '/assests/django.png', title: 'DJANGO', href: '#' },
     { img: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg', title: 'FASTAPI', href: '#' },
   ],
   'AI & ML': [
     { img: 'https://cdn.simpleicons.org/huggingface/FFD21E', title: 'NLP', href: '#' },
-    { img: '/public/assests/openai.png', title: 'OpenAI API', href: '#' },
+    { img: '/assests/openai.png', title: 'OpenAI API', href: '#' },
     { img: 'https://cdn.simpleicons.org/langchain/1C3C3C', title: 'LLM', href: '#' },
   ],
   'Cloud': [
@@ -36,20 +37,21 @@ const SKILLS = {
     { img: 'https://cdn.simpleicons.org/arduino/00979D', title: 'IoT', href: '#' },
   ],
   'DataBase': [
-    { img: '/public/assests/sql.png', title: 'MYSQL', href: 'https://github.com/affancoder/SQL' },
-    { img: '/public/assests/mongodb.png', title: 'MONGODB', href: 'https://github.com/affancoder/MongoDB' },
-    { img: '/public/assests/firebase.png', title: 'FIREBASE', href: 'https://github.com/affancoder/MongoDB' },
+    { img: '/assests/sql.png', title: 'MYSQL' },
+    { img: '/assests/mongodb.png', title: 'MONGODB' },
+    { img: '/assests/firebase.png', title: 'FIREBASE' },
   ],
   'Frontend Framework': [
-    { img: '/public/assests/bootstrap.png', title: 'BOOTSTRAP' },
-    { img: '/public/assests/laravel.png', title: 'LARAVEL' },
-    { img: '/public/assests/tailwindcss.png', title: 'TAILWINDCSS' },
+    { img: '/assests/bootstrap.png', title: 'BOOTSTRAP' },
+    { img: '/assests/laravel.png', title: 'LARAVEL' },
+    { img: '/assests/tailwindcss.png', title: 'TAILWINDCSS' },
   ],
 }
 
 const ICONS = { 'Programming Language': '🖥️', 'Frontend Development': '🎨', 'Backend Development': '⚙️', 'AI & ML': '🤖', 'Cloud': '☁️', 'Hardware & IoT': '📡', 'DataBase': '🛢️', 'Frontend Framework': 'Frontend Framework' }
 
 export default function Home() {
+  const { userName } = useUser()
   const typedRef = useRef(null)
 
   useEffect(() => {
@@ -73,6 +75,7 @@ export default function Home() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      gsap.from('.welcome-banner', { y: -20, opacity: 0, duration: 0.7, ease: 'power2.out', delay: 0.1 })
       gsap.from(heroLeftRef.current, { x: -80, opacity: 0, duration: 1, ease: 'power3.out', delay: 0.2 })
       gsap.from(heroRightRef.current, { x: 80, opacity: 0, duration: 1, ease: 'power3.out', delay: 0.4 })
       gsap.from(heroButtonsRef.current?.children || [], { y: 30, opacity: 0, duration: 0.6, stagger: 0.15, ease: 'power2.out', delay: 0.8 })
@@ -175,6 +178,11 @@ export default function Home() {
 
   return (
     <main>
+      {userName && (
+        <section className="welcome-banner">
+          <h1>Welcome, <span className="purple">{userName}</span></h1>
+        </section>
+      )}
       <section className="firstSection">
         <div className="leftSection" ref={heroLeftRef}>
           Hi, my name is <span className="purple">Kobayashi</span>
@@ -182,7 +190,7 @@ export default function Home() {
           <span id="element" ref={typedRef}></span>
           <div className="buttons" ref={heroButtonsRef}>
             <button className="btn1">
-              <a href="/public/assests/Resume.pdf" target="_blank" rel="noreferrer"><i className="fas fa-file-alt"></i> Resume</a>
+              <a href="/assests/Resume.pdf" target="_blank" rel="noreferrer"><i className="fas fa-file-alt"></i> Resume</a>
             </button>
             <button className="btn2">
               <a href="https://github.com/MightWarriorNo1" target="_blank" rel="noreferrer"><i className="fab fa-github"></i> Github</a>
@@ -190,7 +198,7 @@ export default function Home() {
           </div>
         </div>
         <div className="rightSection" ref={heroRightRef}>
-          <img src="/public/assests/bg.png" alt="Developer" />
+          <img src="/assests/bg.png" alt="Developer" />
         </div>
       </section>
       <hr />
@@ -255,7 +263,7 @@ export default function Home() {
         <h1 className="h1"><i className="fa-solid fa-graduation-cap"></i> Higher Education</h1>
         <div className="firstSection">
           <div className="leftSection">
-            <img src="/public/assests/aspect.jpg" alt="NIT" />
+            <img src="/assests/aspect.jpg" alt="NIT" />
           </div>
           <div className="rightSection">
             <form className="colbox">
@@ -274,12 +282,12 @@ export default function Home() {
       <section className="thirdSection">
         <h1 className="h1"><i className="fa-brands fa-superpowers"></i> Strengths</h1>
         <div className="strength">
-          <div><img src="/public/assests/webdev.png" alt="" /><p>Development Enthusiast</p></div>
-          <div><img src="/public/assests/Fast.png" alt="" /><p>Fast Project Delivery</p></div>
-          <div><img src="/public/assests/learner.png" alt="" /><p>Quick Learner</p></div>
-          <div><img src="/public/assests/loyal.png" alt="" /><p>Loyal & Trustworthy</p></div>
-          <div><img src="/public/assests/comm.png" alt="" /><p>Excellent Communication</p></div>
-          <div><img src="/public/assests/colllll.png" alt="" /><p>Collaborative</p></div>
+          <div><img src="/assests/webdev.png" alt="" /><p>Development Enthusiast</p></div>
+          <div><img src="/assests/Fast.png" alt="" /><p>Fast Project Delivery</p></div>
+          <div><img src="/assests/learner.png" alt="" /><p>Quick Learner</p></div>
+          <div><img src="/assests/loyal.png" alt="" /><p>Loyal & Trustworthy</p></div>
+          <div><img src="/assests/comm.png" alt="" /><p>Excellent Communication</p></div>
+          <div><img src="/assests/colllll.png" alt="" /><p>Collaborative</p></div>
         </div>
       </section>
       <hr />
@@ -294,7 +302,7 @@ export default function Home() {
           </div>
           <div className="portfolio-video-wrapper">
             <video className="portfolio-video" autoPlay muted loop>
-              <source src="/public/assests/ProVideo/appreciation.mp4" type="video/mp4" />
+              <source src="/assests/ProVideo/appreciation.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
           </div>

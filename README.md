@@ -56,10 +56,10 @@ I'm a full stack developer...
 
 ## Authors
 
-- [@affancoder](https://github.com/mightwarriorno1)
+- [@kobayashi](https://github.com/mightwarriorno1)
 
 
 ## Feedback
 
-If you have any feedback, please reach out to us at affanasgar8@gmail.com
+If you have any feedback, please reach out to us at issakobayashi411@gmail.com
 

@@ -14,12 +14,43 @@ body {
 }
 
 body {
-  background-color: rgb(0, 0, 33);
+  background-color: transparent;
   color: white;
   font-family: "Poppins", sans-serif;
   flex-wrap: wrap;
   opacity: 0;
   transition: opacity 1s ease-in-out;
+}
+
+/* Main app background (same as lock screen) - when .app-root exists */
+.app-root {
+  position: relative;
+  min-height: 100vh;
+}
+
+.app-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-image: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=1920&q=80');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  animation: windows-bg-zoom 20s ease-in-out infinite alternate;
+}
+
+.app-background::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0, 120, 212, 0.75) 0%, rgba(0, 188, 242, 0.5) 50%, rgba(0, 108, 189, 0.8) 100%);
+  pointer-events: none;
+}
+
+.app-root main,
+.app-root footer {
+  position: relative;
+  z-index: 1;
 }
 
 body.loaded {
@@ -98,6 +129,18 @@ main hr {
   margin: 40px 84px;
 }
 
+.welcome-banner {
+  text-align: center;
+  padding: 24px 20px 16px;
+  margin-top: 80px;
+}
+
+.welcome-banner h1 {
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
 .left {
   font-size: 1.5rem;
 }
@@ -114,7 +157,7 @@ main hr {
 }
 
 .leftSection {
-  font-size: 1.9rem;
+  font-size: 2.5rem;
 }
 
 .leftSection .btn1,
@@ -1310,5 +1353,364 @@ main hr {
   main hr {
     width: 280px;
     margin-left: 40px;
+  }
+}
+
+/* ========== Windows-style startup flow ========== */
+/* Background layer: full-screen image + overlay (all startup screens) */
+.windows-bg-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=1920&q=80');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  animation: windows-bg-zoom 20s ease-in-out infinite alternate;
+}
+
+.windows-bg-layer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0, 120, 212, 0.75) 0%, rgba(0, 188, 242, 0.5) 50%, rgba(0, 108, 189, 0.8) 100%);
+  pointer-events: none;
+}
+
+@keyframes windows-bg-zoom {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.08); }
+}
+
+.windows-loading-screen,
+.windows-lock-screen,
+.windows-name-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  overflow: hidden;
+}
+
+.windows-lock-screen {
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Lock screen: Tokyo nightscape background */
+.windows-lock-screen .windows-bg-layer {
+  background-image: url('https://images.unsplash.com/photo-1759970752253-aac9a0f9beb8?w=1920&q=80');
+}
+
+.windows-lock-screen .windows-bg-layer::after {
+  background: linear-gradient(180deg, rgba(10, 15, 45, 0.6) 0%, rgba(20, 30, 80, 0.4) 50%, rgba(15, 25, 60, 0.7) 100%);
+}
+
+/* Loading screen: entrance + content above bg */
+.windows-loading-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: windows-loading-in 0.8s ease-out forwards;
+}
+
+@keyframes windows-loading-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.windows-loading-icon,
+.windows-lock-icon {
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.windows-logo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8%;
+  width: 120px;
+  height: 120px;
+}
+
+.windows-logo .w-square {
+  background: #fff;
+  border-radius: 4px;
+  animation: windows-pulse 1.2s ease-in-out infinite;
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+}
+
+.windows-loading-screen .windows-logo .w-tl {
+  animation: windows-logo-in 0.5s ease-out 0.1s backwards, windows-pulse 1.2s ease-in-out 0.6s infinite;
+}
+.windows-loading-screen .windows-logo .w-tr {
+  animation: windows-logo-in 0.5s ease-out 0.2s backwards, windows-pulse 1.2s ease-in-out 0.6s infinite;
+}
+.windows-loading-screen .windows-logo .w-bl {
+  animation: windows-logo-in 0.5s ease-out 0.3s backwards, windows-pulse 1.2s ease-in-out 0.6s infinite;
+}
+.windows-loading-screen .windows-logo .w-br {
+  animation: windows-logo-in 0.5s ease-out 0.4s backwards, windows-pulse 1.2s ease-in-out 0.6s infinite;
+}
+
+@keyframes windows-logo-in {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.windows-lock-screen .windows-logo .w-square {
+  animation: windows-lock-logo-in 0.6s ease-out backwards;
+  box-shadow: 0 0 24px rgba(255, 255, 255, 0.25);
+}
+.windows-lock-screen .windows-logo .w-tl { animation-delay: 0s; }
+.windows-lock-screen .windows-logo .w-tr { animation-delay: 0.08s; }
+.windows-lock-screen .windows-logo .w-bl { animation-delay: 0.16s; }
+.windows-lock-screen .windows-logo .w-br { animation-delay: 0.24s; }
+
+@keyframes windows-lock-logo-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes windows-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.85; transform: scale(0.98); }
+}
+
+.windows-logo.small {
+  width: 64px;
+  height: 64px;
+  gap: 4px;
+}
+
+.windows-loading-dots {
+  display: flex;
+  gap: 10px;
+  margin-top: 1rem;
+  animation: windows-dots-in 0.5s ease-out 0.5s both;
+}
+
+@keyframes windows-dots-in {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.windows-loading-dots span {
+  width: 10px;
+  height: 10px;
+  background: #fff;
+  border-radius: 50%;
+  animation: windows-dot 0.8s ease-in-out infinite;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
+}
+
+.windows-loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+.windows-loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes windows-dot {
+  0%, 100% { opacity: 0.4; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* Lock screen content */
+.windows-lock-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  animation: windows-lock-content-in 0.8s ease-out forwards;
+}
+
+@keyframes windows-lock-content-in {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.windows-lock-hint {
+  font-size: 1rem;
+  opacity: 0.95;
+  letter-spacing: 0.02em;
+  margin-top: 0.5rem;
+  animation: windows-hint-pulse 2s ease-in-out infinite;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes windows-hint-pulse {
+  0%, 100% { opacity: 0.85; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(-2px); }
+}
+
+/* Name input screen */
+.windows-name-screen .windows-name-card {
+  position: relative;
+  z-index: 1;
+  animation: windows-name-card-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes windows-name-card-in {
+  0% {
+    opacity: 0;
+    transform: translateY(60px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.windows-name-card {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 12px;
+  padding: 2.5rem 2rem;
+  min-width: 320px;
+  max-width: 90vw;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+}
+
+.windows-name-card h2 {
+  font-size: 1.75rem;
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.windows-name-card p {
+  opacity: 0.9;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+}
+
+.windows-name-card .windows-name-icon {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.windows-name-card .windows-name-icon .windows-logo .w-square {
+  animation: none;
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.2);
+}
+
+.windows-name-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.windows-name-card input {
+  padding: 12px 16px;
+  font-size: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+
+.windows-name-card input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.windows-name-card input:focus {
+  border-color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15);
+}
+
+.windows-name-card button {
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  background: #fff;
+  color: #0078d4;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.windows-name-card button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.windows-name-card button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ========== Mouse sparkles ========== */
+.mouse-sparkles-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  overflow: hidden;
+}
+
+.mouse-sparkle {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  margin-left: -4px;
+  margin-top: -4px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #fff, rgba(255, 255, 255, 0.6));
+  box-shadow:
+    0 0 6px 2px rgba(255, 255, 255, 0.8),
+    0 0 12px 4px rgba(0, 188, 242, 0.5),
+    0 0 20px 6px rgba(0, 120, 212, 0.3);
+  animation: sparkle-fade 0.8s ease-out forwards;
+  will-change: transform, opacity;
+}
+
+@keyframes sparkle-fade {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.2);
   }
 }

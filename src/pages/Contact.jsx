@@ -43,7 +43,7 @@ export default function Contact() {
       <main ref={heroRef}>
         <div className="firstSection">
           <div className="leftSection">
-            <img src="/public/assests/avatar.png" alt="Affan" style={{ height: '320px' }} />
+            <img src="=/assests/avatar.png" style={{ height: '320px' }} />
           </div>
           <div className="rightSection" id="rs">
             <form>
